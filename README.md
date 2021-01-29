@@ -1,6 +1,6 @@
 # goftp - an FTP client for golang
 
-[![Build Status](https://travis-ci.org/secsy/goftp.svg)](https://travis-ci.org/secsy/goftp) [![GoDoc](https://godoc.org/github.com/secsy/goftp?status.svg)](https://godoc.org/github.com/secsy/goftp)
+**Forked because of MLST parsing issue with original code, unresolved by developers for 1yr+**
 
 goftp aims to be a high-level FTP client that takes advantage of useful FTP features when supported by the server.
 
