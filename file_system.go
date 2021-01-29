@@ -145,6 +145,11 @@ func (c *Client) ReadDir(path string) ([]os.FileInfo, error) {
 
 	var ret []os.FileInfo
 	for _, entry := range entries {
+
+		// ignore this line as it's not usable
+		if !strings.Contains(entry, ";") { continue } 
+
+		// attempt parse
 		info, err := parser(entry, true)
 		if err != nil {
 			c.debug("error in ReadDir: %s", err)
