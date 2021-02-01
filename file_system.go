@@ -150,7 +150,7 @@ func (c *Client) ReadDir(path string) ([]os.FileInfo, error) {
 		// ignore this line as it's not usable
 		c.debug("entry: '%s'", entry)
 		if entry == " ." || entry == " .." {
-			c.debug("ignoring useless entry '%s'", entry)
+			c.debug("ignoring special (unusable) entry '%s'", entry)
 			continue
 		}
 
