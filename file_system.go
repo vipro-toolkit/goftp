@@ -149,7 +149,7 @@ func (c *Client) ReadDir(path string) ([]os.FileInfo, error) {
 
 		// ignore this line as it's not usable
 		c.debug("entry: '%s'", entry)
-		if !strings.Contains(entry, ";") {
+		if entry == " ." || entry == " .." {
 			c.debug("ignoring useless entry '%s'", entry)
 			continue
 		}
@@ -411,6 +411,15 @@ func parseMLST(entry string, skipSelfParent bool) (os.FileInfo, error) {
 	incompleteError := ftpError{err: fmt.Errorf(`MLST entry incomplete: %s`, entry)}
 
 	parts := strings.Split(entry, "; ")
+
+	// no file info is provided in MLST entry (e.g. as seen in ESR)
+	if len(parts) == 1 {
+		return &ftpFile{
+			name:  strings.TrimSpace(entry),
+			raw:   entry,
+		}, nil
+	}
+
 	if len(parts) != 2 {
 		return nil, parseError
 	}
