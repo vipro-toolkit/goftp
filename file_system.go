@@ -130,10 +130,11 @@ func (c *Client) ReadDir(path string) ([]os.FileInfo, error) {
 	parser := parseMLST
 
 	if err != nil {
+		c.debug("can't use MLSD, using LIST instead")
+
 		if !commandNotSupporterdError(err) {
 			return nil, err
 		}
-
 		entries, err = c.dataStringList("LIST %s", path)
 		if err != nil {
 			return nil, err
@@ -147,7 +148,11 @@ func (c *Client) ReadDir(path string) ([]os.FileInfo, error) {
 	for _, entry := range entries {
 
 		// ignore this line as it's not usable
-		if !strings.Contains(entry, ";") { continue } 
+		c.debug("entry: '%s'", entry)
+		if !strings.Contains(entry, ";") {
+			c.debug("ignoring useless entry '%s'", entry)
+			continue
+		}
 
 		// attempt parse
 		info, err := parser(entry, true)
