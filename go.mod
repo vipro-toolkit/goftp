@@ -1,3 +1,3 @@
 module github.com/vipro-toolkit/goftp
 
-go 1.15
+go 1.20
